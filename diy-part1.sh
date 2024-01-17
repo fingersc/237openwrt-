@@ -21,4 +21,4 @@ git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic
 git clone https://github.com/sbwml/luci-app-alist package/alist
 git clone https://github.com/kongfl888/luci-app-timedreboot
 git clone https://github.com/pymumu/luci-app-smartdns
-git clone https://github.com/destan19/OpenAppFilter/tree/master
+git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
