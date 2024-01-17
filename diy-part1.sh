@@ -18,6 +18,6 @@
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 
 git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic
-git clone https://github.com/sbwml/luci-app-alist package/alist
+git clone https://github.com/sbwml/luci-app-alist
 git clone https://github.com/kongfl888/luci-app-timedreboot
 git clone https://github.com/pymumu/luci-app-smartdns
