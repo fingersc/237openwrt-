@@ -12,8 +12,8 @@
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 #添加额外软件包
-git clone https://github.com/immortalwrt/packages/tree/master/net/smartdns.git package/smartdns
-git clone https://github.com/immortalwrt/luci/tree/master/applications/luci-app-smartdns.git package/luci-app-smartdns
+git clone https://github.com/pymumu/smartdns package/smartdns
+git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
 
 # Modify default IP
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
