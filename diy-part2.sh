@@ -23,5 +23,4 @@ git clone https://github.com/pymumu/openwrt-smartdns.git feeds/luci/applications
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
 #貌似需要重新执行以下代码才能正确进行编译
-./scripts/feeds install package -a
-./scripts/feeds install luci -a
+./scripts/feeds install -a -f
