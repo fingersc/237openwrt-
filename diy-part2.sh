@@ -10,8 +10,8 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 
 # 删除部分原软件包，以保证可以后续添加的软件包可以被编译
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
+# rm -rf feeds/packages/net/smartdns
+# rm -rf feeds/luci/applications/luci-app-smartdns
 
 # 添加额外软件包
 # git clone https://github.com/pymumu/openwrt-smartdns.git feeds/packages/net/smartdns/
