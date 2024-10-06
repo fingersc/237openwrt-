@@ -18,6 +18,9 @@
 # git clone https://github.com/pymumu/openwrt-smartdns.git feeds/luci/applications/luci-app-smartdns/
 # git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
 # git clone https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git lucky-repo
+cp -rf lucky-repo/luci-app-lucky package/luci-app-lucky
+cp -rf lucky-repo/lucky package/lucky
 
 # Modify default IP
 # sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
