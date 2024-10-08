@@ -91,7 +91,7 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds update -a
-        ./scripts/feeds install -a -f
+        ./scripts/feeds install -a
         
     - name: 加载config & DIY_P2_SH
       run: |
