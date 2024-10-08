@@ -17,8 +17,8 @@
 #echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 #添加smartdns feed源
-echo 'src-git openwrt-smartdns https://github.com/pymumu/openwrt-smartdns' >>feeds.conf.default
-echo 'src-git luci-app-smartdns https://github.com/pymumu/luci-app-smartdns' >>feeds.conf.default
+#echo 'src-git openwrt-smartdns https://github.com/pymumu/openwrt-smartdns' >>feeds.conf.default
+#echo 'src-git luci-app-smartdns https://github.com/pymumu/luci-app-smartdns' >>feeds.conf.default
 
 # 添加额外软件包
 #git clone https://github.com/pymumu/openwrt-smartdns.git package/smartdns
