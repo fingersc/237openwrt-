@@ -82,7 +82,7 @@ jobs:
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
     - name: 检测并移除defconfig文件夹
-       run: |
+      run: |
          if [ -d "openwrt/defconfig" ]; then
            rm -rf openwrt/defconfig
            echo "Removed defconfig folder to avoid conflict."
