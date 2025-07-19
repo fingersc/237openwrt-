@@ -21,11 +21,11 @@ on:
 
 env:
   REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-6.6.git
-  REPO_BRANCH:openwrt-24.10-6.6
-  FEEDS_CONF:feeds.conf.default
-  CONFIG_FILE:24.10-6.6.config
-  DIY_P1_SH:21.02-diy-part1.sh
-  DIY_P2_SH:21.02-diy-part2.sh
+  REPO_BRANCH: openwrt-24.10-6.6
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: 24.10-6.6.config
+  DIY_P1_SH: 21.02-diy-part1.sh
+  DIY_P2_SH: 21.02-diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
