@@ -62,7 +62,13 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-        rm -rf openwrt/defconfig
+        
+    - name: Remove defconfig folder to avoid conflict
+       run: |
+         if [ -d "openwrt/defconfig" ]; then
+           rm -rf openwrt/defconfig
+           echo "Removed defconfig folder to avoid conflict."
+         fi
 
     - name: Load custom feeds
       run: |
