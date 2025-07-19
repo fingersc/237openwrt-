@@ -75,15 +75,6 @@ jobs:
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
-
-    #检查机型
-    - name: Check target device
-      run: |
-        cd openwrt
-        if ! grep -q 'CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y' .config; then
-           echo "错误：配置的机型不是红米AX6000（xiaomi_redmi-router-ax6000）。请检查配置文件！"
-           exit 1
-        fi
     
     - name: Load custom configuration
       run: |
@@ -91,6 +82,14 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
+        
+        # 检查目标机型是否为红米AX6000
+        if ! grep -q "CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
+          echo "❌ 错误：配置文件未指定红米AX6000机型！当前配置："
+          grep "CONFIG_TARGET_mediatek_filogic_DEVICE" .config || echo "未找到相关配置"
+          exit 1  # 终止流程 
+        fi
+        
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: Download package
