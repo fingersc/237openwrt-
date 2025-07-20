@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
-  TARGET_DIR: "openwrt/defconfig"
+  #TARGET_DIR: "openwrt/defconfig"
 
 
 jobs:
@@ -89,25 +89,25 @@ jobs:
     #       echo "Removed defconfig folder to avoid conflict."
     #     fi
 
-    - name: 替换defconfig文件夹中文件
-      run: |
-        if [ -d "$TARGET_DIR" ]; then 
-        find "$TARGET_DIR" -mindepth 1 -delete 2>/dev/null 
-          echo "已执行清空操作：$TARGET_DIR"
-        else 
-          echo "错误：目标目录不存在" >&2 
-          exit 1 
-        fi 
+    #- name: 替换defconfig文件夹中文件
+    #  run: |
+    #    if [ -d "$TARGET_DIR" ]; then 
+    #    find "$TARGET_DIR" -mindepth 1 -delete 2>/dev/null 
+    #      echo "已执行清空操作：$TARGET_DIR"
+    #    else 
+    #      echo "错误：目标目录不存在" >&2 
+    #      exit 1 
+    #    fi 
  
-        if [ -n "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then 
-          echo "警告：目录未完全清空！残留内容：" >&2 
-          ls -lA "$TARGET_DIR"
-          exit 2 
-        else 
-          echo "验证通过：$TARGET_DIR 已是空目录"
-          exit 0 
-        fi 
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/defconfig
+    #    if [ -n "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then 
+    #      echo "警告：目录未完全清空！残留内容：" >&2 
+    #      ls -lA "$TARGET_DIR"
+    #      exit 2 
+    #    else 
+    #      echo "验证通过：$TARGET_DIR 已是空目录"
+    #      exit 0 
+    #    fi 
+    #    [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/defconfig
 
     - name: 加载feeds.conf.default & DIY_P1_SH
       run: |
@@ -226,4 +226,3 @@ jobs:
         name: ${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}-${{ env.DEVICE_NAME }}${{ env.SET_GSW }}${{ env.WIFI_INTERFACE }}${{ env.BUILD_DOCKERMAN }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-
