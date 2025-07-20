@@ -156,9 +156,9 @@ jobs:
           echo "✅ 配置文件机型正确：红米AX6000"
         fi
         # make defconfig
-        make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+        #make download -j8
+        #find dl -size -1024c -exec ls -l {} \;
+        #find dl -size -1024c -exec rm -f {} \;
         
     - name: 编译固件
       id: compile
