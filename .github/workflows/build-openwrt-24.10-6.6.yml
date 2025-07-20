@@ -37,8 +37,8 @@ env:
 
 jobs:
   build:
-    runs-on: Debian-11.11
-
+    runs-on: ubuntu-latest
+    container: debian:11 
     permissions:
       contents: write
     
