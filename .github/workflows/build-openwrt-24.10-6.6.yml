@@ -32,7 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
-  TARGET_DIR: openwrt/defconfig
+  TARGET_DIR: "openwrt/defconfig"
 
 
 jobs:
@@ -127,14 +127,6 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
-        
-        # 检查目标机型是否为红米AX6000
-        if ! grep -q "CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
-          echo "❌ 错误：配置文件未指定红米AX6000机型！当前配置："
-          grep "CONFIG_TARGET_mediatek_filogic_DEVICE" .config || echo "未找到相关配置"
-          exit 1  # 终止流程 
-        fi
-        
         $GITHUB_WORKSPACE/$DIY_P2_SH
         
     - name: SSH链接管理
@@ -149,6 +141,14 @@ jobs:
       run: |
         cd openwrt
         make defconfig
+        
+        # 检查目标机型是否为红米AX6000
+        if ! grep -q "CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
+          echo "❌ 错误：配置文件未指定红米AX6000机型！当前配置："
+          grep "CONFIG_TARGET_mediatek_filogic_DEVICE" .config || echo "未找到相关配置"
+          exit 1  # 终止流程 
+        fi
+        
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
