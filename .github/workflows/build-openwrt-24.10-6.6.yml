@@ -144,7 +144,7 @@ jobs:
         make defconfig
         
         # 检查目标机型是否为红米AX6000
-        if ! grep -q "CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
+        if ! grep -q "CONFIG_TARGET_DEVICE_mediatek_mt7986_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
           echo "❌ 错误：配置文件未指定红米AX6000机型！当前配置："
           grep "CONFIG_TARGET_mediatek_filogic_DEVICE" .config || echo "未找到相关配置"
           exit 1  # 终止流程 
