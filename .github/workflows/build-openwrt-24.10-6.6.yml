@@ -81,12 +81,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
-#    - name: 检测并移除defconfig文件夹
-#      run: |
-#         if [ -d "openwrt/defconfig" ]; then
-#           rm -rf openwrt/defconfig
-#           echo "Removed defconfig folder to avoid conflict."
-#         fi
+    #- name: 检测并移除defconfig文件夹
+    #  run: |
+    #     if [ -d "openwrt/defconfig" ]; then
+    #       rm -rf openwrt/defconfig
+    #       echo "Removed defconfig folder to avoid conflict."
+    #     fi
 
     - name: 替换defconfig文件夹中文件
        TARGET_DIR="openwrt/defconfig"
