@@ -90,11 +90,11 @@ jobs:
 
     - name: 替换defconfig文件夹中文件
        TARGET_DIR="openwrt/defconfig"
-      
+      run: |
         if [ -d "$TARGET_DIR" ]; then 
         find "$TARGET_DIR" -mindepth 1 -delete 2>/dev/null 
           echo "已执行清空操作：$TARGET_DIR"
-       else 
+        else 
           echo "错误：目标目录不存在" >&2 
           exit 1 
         fi 
