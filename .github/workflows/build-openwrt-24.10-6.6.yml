@@ -153,13 +153,11 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-         # 检查目标机型是否为红米AX6000
-        if ! grep -q "CONFIG_TARGET_DEVICE_mediatek_mt7986_DEVICE_xiaomi_redmi-router-ax6000=y" .config; then 
-          echo "❌ 错误：配置文件未指定红米AX6000机型！当前配置："
-          grep "CONFIG_TARGET_mediatek_filogic_DEVICE" .config || echo "未找到相关配置"
-        else
-          echo "✅ 配置文件机型正确：红米AX6000"
-        fi
+        
+        # 检查固件型号
+        echo "准备编译的固件机型为："
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/'
+        
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
