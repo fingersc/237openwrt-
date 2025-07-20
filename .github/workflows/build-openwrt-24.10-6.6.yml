@@ -32,6 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
+  TARGET_DIR: openwrt/defconfig
 
 
 jobs:
@@ -89,7 +90,6 @@ jobs:
     #     fi
 
     - name: 替换defconfig文件夹中文件
-       TARGET_DIR="openwrt/defconfig"
       run: |
         if [ -d "$TARGET_DIR" ]; then 
         find "$TARGET_DIR" -mindepth 1 -delete 2>/dev/null 
@@ -148,7 +148,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        #make defconfig
+        make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
