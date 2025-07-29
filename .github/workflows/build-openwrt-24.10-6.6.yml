@@ -38,6 +38,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-22.04
+
     permissions:
       contents: write
     
@@ -51,16 +52,8 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
         sudo docker image prune --all --force
-        sudo apt update -y
-        sudo apt full-upgrade -y
-        sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
-          bzip2 ccache clang cmake cpio curl device-tree-compiler ecj fastjar flex gawk gettext gcc-multilib \
-          g++-multilib git gnutls-dev gperf haveged help2man intltool lib32gcc-s1 libc6-dev-i386 libelf-dev \
-          libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses-dev libpython3-dev \
-          libreadline-dev libssl-dev libtool libyaml-dev libz-dev lld llvm lrzsz mkisofs msmtp nano \
-          ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip python3-ply python3-docutils \
-          python3-pyelftools qemu-utils re2c rsync scons squashfs-tools subversion swig texinfo uglifyjs \
-          upx-ucl unzip vim wget xmlto xxd zlib1g-dev zstd libncurses5-dev ncurses-bin
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -89,33 +82,6 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
-    #- name: 检测并移除defconfig文件夹
-    #  run: |
-    #     if [ -d "openwrt/defconfig" ]; then
-    #       rm -rf openwrt/defconfig
-    #       echo "Removed defconfig folder to avoid conflict."
-    #     fi
-
-    #- name: 替换defconfig文件夹中文件
-    #  run: |
-    #    if [ -d "$TARGET_DIR" ]; then 
-    #    find "$TARGET_DIR" -mindepth 1 -delete 2>/dev/null 
-    #      echo "已执行清空操作：$TARGET_DIR"
-    #    else 
-    #      echo "错误：目标目录不存在" >&2 
-    #      exit 1 
-    #    fi 
- 
-    #    if [ -n "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then 
-    #      echo "警告：目录未完全清空！残留内容：" >&2 
-    #      ls -lA "$TARGET_DIR"
-    #      exit 2 
-    #    else 
-    #      echo "验证通过：$TARGET_DIR 已是空目录"
-    #      exit 0 
-    #    fi 
-    #    [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/defconfig
-
     - name: 加载feeds.conf.default & DIY_P1_SH
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -123,20 +89,15 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
         
-    - name: 更新 & 安装 feeds & 清理defconfig文件夹
+    - name: 更新 & 安装 feeds
       run: |
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a 
         
-        rm -rf /defconfig/*
-        
     - name: 加载config & DIY_P2_SH
       run: |
-        [ -e files ] && mv files openwrt/files
-        rm -rf /defconfig/*
-        #[ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/defconfig
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
@@ -232,6 +193,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: ${{ env.FIRMWARE }}/*
+        name: ${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}-${{ env.DEVICE_NAME }}${{ env.SET_GSW }}${{ env.WIFI_INTERFACE }}${{ env.BUILD_DOCKERMAN }}
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
         name: ${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}-${{ env.DEVICE_NAME }}${{ env.SET_GSW }}${{ env.WIFI_INTERFACE }}${{ env.BUILD_DOCKERMAN }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
