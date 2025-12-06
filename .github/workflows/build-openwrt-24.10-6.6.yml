@@ -20,10 +20,10 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-6.6
+  REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-6.6.git
   REPO_BRANCH: openwrt-24.10-6.6
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
+  CONFIG_FILE: 24.10-6.6.config
   DIY_P1_SH: 21.02-diy-part1.sh
   DIY_P2_SH: 21.02-diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -113,12 +113,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make defconfig
-        
-        # 检查固件型号
-        echo "准备编译的固件机型为："
-        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/'
-        
+        #make defconfig      
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
