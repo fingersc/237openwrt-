@@ -103,15 +103,16 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make olddefconfig
-        #make defconfig
+        make defconfig
         grep '^CONFIG_TARGET_DEVICE.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV || echo "DEVICE_NAME=unknown" >> $GITHUB_ENV
-        echo "编译机型为：${{ env.DEVICE_NAME }}"
-        #make download -j8
-        #find dl -size -1024c -exec ls -l {} \;
-        #find dl -size -1024c -exec rm -f {} \;
-        
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 编译机型显示
+      run: echo "编译机型为：${{ env.DEVICE_NAME }}"
+      
     - name: 编译固件
       id: compile
       run: |
